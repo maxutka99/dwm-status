@@ -14,15 +14,14 @@
 #include <sys/sysinfo.h>
 #include <X11/Xlib.h>
 
+
+Display *ourDisplay;
+
+void flush() {
+	XFlush(ourDisplay); // Flush display
+	sleep(2); // Wait 2 seconds
+}
 int main() {
-	void flush() {
-		XFlush(ourDisplay);
-		sleep(2);
-	}
-
-
-
-	Display *ourDisplay;
 	ourDisplay=XOpenDisplay(NULL);
 	if (ourDisplay==NULL) {
 		std::cout << "Error connection graphic terminal" << std::endl;
@@ -44,7 +43,7 @@ int main() {
 
 	user = ss.str() + "@" + ww.str();
 
-	char* userhost = strdup(user,c_str());
+	char* userhost = strdup(user.c_str());
 
 	std::cout << "Simple Status Changer for dwm" << std::endl;
 	XStoreName(ourDisplay, DefaultRootWindow(ourDisplay), "I use dwm btw");
