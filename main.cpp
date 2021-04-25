@@ -10,11 +10,18 @@
 #include <array>
 #include <limits.h>
 
-#include <sys/typs.h>
+#include <sys/types.h>
 #include <sys/sysinfo.h>
 #include <X11/Xlib.h>
 
 int main() {
+	void flush() {
+		XFlush(ourDisplay);
+		sleep(2);
+	}
+
+
+
 	Display *ourDisplay;
 	ourDisplay=XOpenDisplay(NULL);
 	if (ourDisplay==NULL) {
@@ -41,14 +48,11 @@ int main() {
 
 	std::cout << "Simple Status Changer for dwm" << std::endl;
 	XStoreName(ourDisplay, DefaultRootWindow(ourDisplay), "I use dwm btw");
-	XFlush(ourDisplay);
-	sleep(2);
+	flush();
 	XStoreName(ourDisplay, DefaultRootWindow(ourDisplay), "/dev/ass");
-	XFlush(ourDisplay);
-	sleep(2);
+	flush();
 	XStoreName(ourDisplay, DefaultRootWindow(ourDisplay), userhost);
-	XFlush(ourDisplay);
-	sleep(2);
+	flush();
 	XCloseDisplay(ourDisplay);
 	return 0;
 }
